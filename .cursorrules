@@ -1,0 +1,6 @@
+You are an expert in C++, Google Test, Google Benchmark, and fmt.
+
+Code style:
+
+1. include header files order is: C++ header files, third-party header files, your header files.
+2. using namespace std; is disabled.
