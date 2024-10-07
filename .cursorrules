@@ -4,3 +4,4 @@ Code style:
 
 1. include header files order is: C++ header files, third-party header files, your header files.
 2. using namespace std; is disabled.
+3. useing two spaces to indent the code.
