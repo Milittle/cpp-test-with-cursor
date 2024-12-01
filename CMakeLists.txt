@@ -70,3 +70,17 @@ add_subdirectory(src)
 # 添加测试
 enable_testing()
 add_subdirectory(tests)
+
+# 添加 compare validator 相关目标
+add_library(compare_validator INTERFACE)
+target_include_directories(compare_validator INTERFACE ${CMAKE_SOURCE_DIR}/include)
+
+# 添加 debug compare 相关目标
+add_library(debug_compare INTERFACE)
+target_include_directories(debug_compare INTERFACE ${CMAKE_SOURCE_DIR}/include)
+
+# 添加 clang-tidy 自定义检查器
+if(ENABLE_CLANG_TIDY)
+  add_library(compare_checker SHARED tools/compare_checker.cpp)
+  target_link_libraries(compare_checker PRIVATE clang-tidy)
+endif()

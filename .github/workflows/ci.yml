@@ -1,0 +1,31 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang-tidy
+      
+      - name: Configure CMake
+        run: cmake -B build -DENABLE_CLANG_TIDY=ON -DENABLE_SANITIZER=ON
+      
+      - name: Build
+        run: cmake --build build
+      
+      - name: Test
+        run: cd build && ctest --output-on-failure
+      
+      - name: Run Clang-Tidy
+        run: |
+          find src -name '*.cpp' -exec clang-tidy {} \;
+      
+      - name: Run Comparison Tests
+        run: |
+          ./build/src/sort_compare_test 
