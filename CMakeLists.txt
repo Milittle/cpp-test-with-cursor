@@ -5,6 +5,21 @@ project(MyProject VERSION 1.0)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+# 添加 clang-tidy 支持
+option(ENABLE_CLANG_TIDY "Enable clang-tidy on build" OFF)
+if(ENABLE_CLANG_TIDY)
+  find_program(CLANG_TIDY_EXE NAMES "clang-tidy")
+  if(CLANG_TIDY_EXE)
+    message(STATUS "Found clang-tidy: ${CLANG_TIDY_EXE}")
+    set(CMAKE_CXX_CLANG_TIDY 
+      ${CLANG_TIDY_EXE};
+      -p=${CMAKE_BINARY_DIR}
+    )
+  else()
+    message(WARNING "clang-tidy not found!")
+  endif()
+endif()
+
 # 添加 Sanitizer 选项
 option(ENABLE_SANITIZER "Enable Address Sanitizer" OFF)
 
